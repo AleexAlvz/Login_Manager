@@ -5,5 +5,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "Login User"
+rootProject.name = "Login Manager"
 include ':app'
+include ':sample'
