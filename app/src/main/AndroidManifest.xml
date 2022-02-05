@@ -13,7 +13,7 @@
         android:fullBackupContent="true">
 
         <activity
-            android:name="com.aleexalvz.login_manager.ui.login.LoginActivity"
+            android:name="com.aleexalvz.login_manager.ui.main.LoginManagerActivity"
             android:exported="true"
             android:label="@string/title_activity_login"
             android:theme="@style/Theme.Sdkuser.NoActionBar" >

@@ -1,13 +1,11 @@
 package com.aleexalvz.login_manager.data.user.repository
 
-import com.aleexalvz.login_manager.data.user.User
-import com.aleexalvz.login_manager.data.user.UserDAO
-import com.aleexalvz.login_manager.data.user.UserException
-import com.aleexalvz.login_manager.data.user.UserManager
+import com.aleexalvz.login_manager.CustomApplication
+import com.aleexalvz.login_manager.data.user.*
 
-class LoginRepositoryImpl(
-    private val dao: UserDAO
-) : LoginRepository {
+class LoginRepositoryImpl() : LoginRepository {
+
+    val dao = CustomApplication.getUserDB().dao
 
     override fun login(email: String, password: String): User {
         try {
