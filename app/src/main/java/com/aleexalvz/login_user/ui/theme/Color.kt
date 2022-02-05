@@ -1,4 +1,4 @@
-package com.aleexalvz.sdk_user.ui.theme
+package com.aleexalvz.login_user.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
@@ -7,3 +7,4 @@ val Purple500 = Color(0xFF6200EE)
 val Purple700 = Color(0xFF3700B3)
 val Teal200 = Color(0xFF03DAC5)
 val DarkBlue = Color(0xFF073083)
+val BackgroundGrey = Color(0xFFC9C9C9)

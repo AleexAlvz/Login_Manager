@@ -1,4 +1,4 @@
-package com.aleexalvz.sdk_user.ui.login
+package com.aleexalvz.login_user.ui.login
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -14,7 +14,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.aleexalvz.sdk_user.ui.theme.DarkBlue
+import com.aleexalvz.login_user.ui.theme.DarkBlue
 
 @Composable
 fun LoginScreen(

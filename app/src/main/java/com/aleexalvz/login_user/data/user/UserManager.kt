@@ -1,4 +1,4 @@
-package com.aleexalvz.sdk_user.data.user
+package com.aleexalvz.login_user.data.user
 
 import android.app.Activity
 import android.content.Intent

@@ -1,16 +1,13 @@
-package com.aleexalvz.sdk_user.di
+package com.aleexalvz.login_user.di
 
 import android.app.Application
 import androidx.room.Room
-import androidx.room.RoomDatabase
-import com.aleexalvz.sdk_user.data.user.UserDatabase
-import com.aleexalvz.sdk_user.data.user.UserRepository
-import com.aleexalvz.sdk_user.data.user.UserRepositoryImpl
+import com.aleexalvz.login_user.data.user.UserDatabase
+import com.aleexalvz.login_user.data.user.repository.LoginRepository
+import com.aleexalvz.login_user.data.user.repository.LoginRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
-import dagger.hilt.android.scopes.ViewModelScoped
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -30,8 +27,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providesUserRepository(db: UserDatabase): UserRepository {
-        return UserRepositoryImpl(db.dao)
+    fun providesUserRepository(db: UserDatabase): LoginRepository {
+        return LoginRepositoryImpl(db.dao)
     }
 
 }

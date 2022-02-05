@@ -1,4 +1,4 @@
-package com.aleexalvz.sdk_user.ui.theme
+package com.aleexalvz.login_user.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

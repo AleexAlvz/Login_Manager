@@ -1,4 +1,4 @@
-package com.aleexalvz.sdk_user.data.user
+package com.aleexalvz.login_user.data.user
 
 import androidx.room.Dao
 import androidx.room.Delete
