@@ -1,20 +1,13 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'kotlin-android'
     id 'kotlin-kapt'
-}
-
-kapt {
-    javacOptions {
-        option("-Adagger.hilt.android.internal.disableAndroidSuperclassValidation=true")
-    }
 }
 
 android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "com.aleexalvz.login_manager"
         minSdk 27
         targetSdk 31
         versionCode 1

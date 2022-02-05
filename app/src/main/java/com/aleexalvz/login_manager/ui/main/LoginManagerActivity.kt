@@ -8,6 +8,7 @@ import androidx.compose.material.Surface
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.aleexalvz.login_manager.builder.LoginManager
 import com.aleexalvz.login_manager.navigation.Routes
 import com.aleexalvz.login_manager.ui.login.LoginScreen
 import com.aleexalvz.login_manager.ui.register.RegisterScreen
@@ -16,6 +17,7 @@ import com.aleexalvz.login_manager.ui.theme.SdkuserTheme
 class LoginManagerActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        LoginManager.clearLoggedUser()
 
         setContent {
             SdkuserTheme {
@@ -30,5 +32,10 @@ class LoginManagerActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        LoginManager.clearLoggedUser()
     }
 }
