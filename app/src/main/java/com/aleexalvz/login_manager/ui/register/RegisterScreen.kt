@@ -7,20 +7,16 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.aleexalvz.login_manager.navigation.Routes
+import com.aleexalvz.login_manager.data.user.User
 import com.aleexalvz.login_manager.ui.theme.DarkBlue
 
 @Composable
@@ -28,13 +24,15 @@ fun RegisterScreen(
     navController: NavController
 ) {
 
-    val email by remember { mutableStateOf("") }
-    val password by remember { mutableStateOf("") }
-    val confirmPassword by remember { mutableStateOf("") }
-    val name by remember { mutableStateOf("") }
-    val lastName by remember { mutableStateOf("") }
-    val numberPhone by remember { mutableStateOf("") }
-    val address by remember { mutableStateOf("") }
+    val viewModel = RegisterViewModel()
+
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
+    var name by remember { mutableStateOf("") }
+    var lastName by remember { mutableStateOf("") }
+    var numberPhone by remember { mutableStateOf("") }
+    var address by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -52,7 +50,7 @@ fun RegisterScreen(
 
         OutlinedTextField(
             value = email,
-            onValueChange = { },
+            onValueChange = { email = it },
             label = { Text(text = "Email:") },
             modifier = Modifier
                 .fillMaxWidth()
@@ -60,7 +58,7 @@ fun RegisterScreen(
 
         OutlinedTextField(
             value = password,
-            onValueChange = { },
+            onValueChange = { password = it },
             label = { Text(text = "Password:") },
             modifier = Modifier
                 .fillMaxWidth(),
@@ -69,7 +67,7 @@ fun RegisterScreen(
 
         OutlinedTextField(
             value = confirmPassword,
-            onValueChange = { },
+            onValueChange = { confirmPassword = it },
             label = { Text(text = "Confirm password:") },
             modifier = Modifier
                 .fillMaxWidth(),
@@ -78,7 +76,7 @@ fun RegisterScreen(
 
         OutlinedTextField(
             value = name,
-            onValueChange = { },
+            onValueChange = { name = it },
             label = { Text(text = "Name:") },
             modifier = Modifier
                 .fillMaxWidth(),
@@ -87,7 +85,7 @@ fun RegisterScreen(
 
         OutlinedTextField(
             value = lastName,
-            onValueChange = { },
+            onValueChange = { lastName = it },
             label = { Text(text = "Last name:") },
             modifier = Modifier
                 .fillMaxWidth(),
@@ -96,7 +94,7 @@ fun RegisterScreen(
 
         OutlinedTextField(
             value = numberPhone,
-            onValueChange = { },
+            onValueChange = { numberPhone = it },
             label = { Text(text = "Number phone:") },
             modifier = Modifier
                 .fillMaxWidth(),
@@ -105,7 +103,7 @@ fun RegisterScreen(
 
         OutlinedTextField(
             value = address,
-            onValueChange = { },
+            onValueChange = { address = it },
             label = { Text(text = "Address:") },
             modifier = Modifier
                 .fillMaxWidth(),
@@ -113,7 +111,10 @@ fun RegisterScreen(
         )
 
         Button(
-            onClick = { navController.navigate(Routes.login) },
+            onClick = {
+                val user = User(0, name, lastName, email, password, numberPhone, address)
+                viewModel.registerUser(user)
+            },
             modifier = Modifier
                 .padding(top = 32.dp)
                 .align(Alignment.CenterHorizontally)

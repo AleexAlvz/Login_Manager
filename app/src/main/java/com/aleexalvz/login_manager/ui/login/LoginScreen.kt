@@ -1,5 +1,7 @@
 package com.aleexalvz.login_manager.ui.login
 
+import android.content.Intent
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -10,14 +12,19 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.aleexalvz.login_manager.builder.LoginManager
 import com.aleexalvz.login_manager.navigation.Routes
 import com.aleexalvz.login_manager.ui.theme.DarkBlue
+import kotlinx.coroutines.flow.FlowCollector
 
 @Composable
 fun LoginScreen(
@@ -25,12 +32,27 @@ fun LoginScreen(
 ) {
     val viewModel = LoginViewModel()
 
+    var loadingVisibility by remember { mutableStateOf(false)}
+
     var email by remember {
         mutableStateOf("")
     }
 
     var password by remember {
         mutableStateOf("")
+    }
+
+    loadingVisibility = when(viewModel.uiLoginState.collectAsState().value){
+        is LoginViewModel.LoginState.Successful -> {
+            false
+        }
+        is LoginViewModel.LoginState.Failure -> {
+            Toast.makeText(LocalContext.current, "Falha no login", Toast.LENGTH_LONG).show()
+            false
+        }
+        is LoginViewModel.LoginState.Loading -> {
+            true
+        }
     }
 
     Column(

@@ -11,7 +11,7 @@ class User(
     val lastName: String,
     val email: String,
     val password: String,
-    val numberPhone: Int? = null,
+    val numberPhone: String? = null,
     val address: String? = null
 )
 

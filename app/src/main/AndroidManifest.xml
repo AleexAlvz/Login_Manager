@@ -3,7 +3,7 @@
     package="com.aleexalvz.login_manager" >
 
     <application
-        android:name="com.aleexalvz.login_manager.CustomApplication"
+        android:name=".LoginApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -15,7 +15,6 @@
         <activity
             android:name="com.aleexalvz.login_manager.ui.main.LoginManagerActivity"
             android:exported="true"
-            android:label="@string/title_activity_login"
             android:theme="@style/Theme.Sdkuser.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

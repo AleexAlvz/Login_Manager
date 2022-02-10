@@ -1,49 +1,50 @@
 package com.aleexalvz.login_manager.builder
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.startActivity
-import androidx.core.view.ContentInfoCompat
-import com.aleexalvz.login_manager.CustomApplication
+import com.aleexalvz.login_manager.LoginApplication
 import com.aleexalvz.login_manager.data.user.User
 import com.aleexalvz.login_manager.ui.main.LoginManagerActivity
 
 object LoginManager {
-    private lateinit var startDestination: Class<Any>
+
+    var onLoginSuccessfull: (()->Unit)? = null
+
     private var LoggedUser: User? = null
 
-    internal fun onLoginSuccessful(user: User) {
+    internal fun login(user: User) {
         saveLoggedUser(user)
-
-        val context = CustomApplication.appContext
-        val intent = Intent(context, startDestination)
-        startActivity(context, intent, null)
+        onLoginSuccessfull?.invoke()
     }
 
     internal fun saveLoggedUser(user: User) {
-        this.LoggedUser = user
+        LoggedUser = user
     }
 
-    internal fun clearLoggedUser(){
-        this.LoggedUser = null
+    internal fun clearLoggedUser() {
+        LoggedUser = null
     }
 
-    fun logout(){
-        this.LoggedUser = null
-        val context = CustomApplication.appContext
+    fun getLoggedUser(): User? = LoggedUser
 
-        val intent = Intent(context, LoginManagerActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK and Intent.FLAG_ACTIVITY_NEW_TASK)
+    fun logout(context: Context) {
+        LoggedUser = null
+
+        val intent = Intent(
+            context,
+            LoginManagerActivity::class.java
+        ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK and Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(context, intent, null)
     }
 
     class Builder(
         val context: Context,
-         val startDestination: Class<Any>
+        val onLoginSuccessful: (()->Unit)
     ) {
         fun init() {
-            LoginManager.startDestination = this.startDestination
+            LoginApplication.appContext = context
+            onLoginSuccessfull = this.onLoginSuccessful
 
             val intent = Intent(context, LoginManagerActivity::class.java)
             startActivity(context, intent, null)
