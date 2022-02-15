@@ -14,7 +14,7 @@ import com.aleexalvz.login_manager.ui.login.LoginScreen
 import com.aleexalvz.login_manager.ui.register.RegisterScreen
 import com.aleexalvz.login_manager.ui.theme.SdkuserTheme
 
-class LoginManagerActivity : ComponentActivity() {
+class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         LoginManager.clearLoggedUser()

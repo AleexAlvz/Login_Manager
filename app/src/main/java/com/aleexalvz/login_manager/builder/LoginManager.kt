@@ -3,19 +3,23 @@ package com.aleexalvz.login_manager.builder
 import android.content.Context
 import android.content.Intent
 import androidx.core.content.ContextCompat.startActivity
-import com.aleexalvz.login_manager.LoginApplication
 import com.aleexalvz.login_manager.data.user.User
-import com.aleexalvz.login_manager.ui.main.LoginManagerActivity
+import com.aleexalvz.login_manager.ui.main.MainActivity
+import java.lang.RuntimeException
 
 object LoginManager {
 
-    var onLoginSuccessfull: (()->Unit)? = null
+    internal var postLoginDestination: Class<*>? = null
 
     private var LoggedUser: User? = null
 
-    internal fun login(user: User) {
-        saveLoggedUser(user)
-        onLoginSuccessfull?.invoke()
+    internal fun login(context: Context, user: User) {
+        try {
+            saveLoggedUser(user)
+            startActivity(context, postLoginDestination!!)
+        }catch (error: Exception){
+            throw RuntimeException("Post login destination not defined")
+        }
     }
 
     internal fun saveLoggedUser(user: User) {
@@ -30,24 +34,24 @@ object LoginManager {
 
     fun logout(context: Context) {
         LoggedUser = null
-
-        val intent = Intent(
-            context,
-            LoginManagerActivity::class.java
-        ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK and Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivity(context, intent, null)
+        startActivity(context, MainActivity::class.java)
     }
 
     class Builder(
         val context: Context,
-        val onLoginSuccessful: (()->Unit)
+        var postLoginDestination: Class<*>
     ) {
         fun init() {
-            LoginApplication.appContext = context
-            onLoginSuccessfull = this.onLoginSuccessful
-
-            val intent = Intent(context, LoginManagerActivity::class.java)
-            startActivity(context, intent, null)
+            LoginManager.postLoginDestination = postLoginDestination
+            startActivity(context, MainActivity::class.java)
         }
+    }
+
+    private fun startActivity(context: Context, destination: Class<*>){
+        val intent = Intent(context, destination)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+
+        startActivity(context, intent, null)
     }
 }

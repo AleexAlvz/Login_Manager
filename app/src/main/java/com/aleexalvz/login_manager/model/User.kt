@@ -5,14 +5,14 @@ import androidx.room.PrimaryKey
 
 @Entity
 class User(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int,
     val name: String,
     val lastName: String,
     val email: String,
     val password: String,
     val numberPhone: String? = null,
-    val address: String? = null
+    val address: String? = null,
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0
 )
 
 class UserException(val error: String): Exception()

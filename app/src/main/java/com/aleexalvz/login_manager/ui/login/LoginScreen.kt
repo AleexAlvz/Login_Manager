@@ -1,5 +1,6 @@
 package com.aleexalvz.login_manager.ui.login
 
+import android.app.Application
 import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -22,6 +23,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.aleexalvz.login_manager.builder.LoginManager
+import com.aleexalvz.login_manager.model.state.LoginState
 import com.aleexalvz.login_manager.navigation.Routes
 import com.aleexalvz.login_manager.ui.theme.DarkBlue
 import kotlinx.coroutines.flow.FlowCollector
@@ -30,9 +32,12 @@ import kotlinx.coroutines.flow.FlowCollector
 fun LoginScreen(
     navController: NavController
 ) {
-    val viewModel = LoginViewModel()
 
-    var loadingVisibility by remember { mutableStateOf(false)}
+    val context = LocalContext.current
+    val viewModel: LoginViewModel =
+        viewModel(factory = LoginViewModel.Factory(context.applicationContext as Application))
+
+
 
     var email by remember {
         mutableStateOf("")
@@ -42,18 +47,21 @@ fun LoginScreen(
         mutableStateOf("")
     }
 
-    loadingVisibility = when(viewModel.uiLoginState.collectAsState().value){
-        is LoginViewModel.LoginState.Successful -> {
-            false
-        }
-        is LoginViewModel.LoginState.Failure -> {
-            Toast.makeText(LocalContext.current, "Falha no login", Toast.LENGTH_LONG).show()
-            false
-        }
-        is LoginViewModel.LoginState.Loading -> {
-            true
+    var loadingVisibility by remember { mutableStateOf(false) }
+    val loginState by viewModel.uiLoginState.collectAsState()
+
+    LaunchedEffect(loginState){
+        loadingVisibility = when (loginState) {
+            is LoginState.Successful -> false
+            is LoginState.Failure -> {
+                Toast.makeText(context, "Login failed", Toast.LENGTH_LONG).show()
+                false
+            }
+            is LoginState.Loading -> true
+            else -> false
         }
     }
+
 
     Column(
         modifier = Modifier

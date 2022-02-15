@@ -1,5 +1,7 @@
 package com.aleexalvz.login_manager.ui.register
 
+import android.app.Application
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -8,23 +10,34 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.aleexalvz.login_manager.data.user.User
+import com.aleexalvz.login_manager.model.state.RegisterState
+import com.aleexalvz.login_manager.navigation.Routes
 import com.aleexalvz.login_manager.ui.theme.DarkBlue
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @Composable
 fun RegisterScreen(
     navController: NavController
 ) {
 
-    val viewModel = RegisterViewModel()
+    val context = LocalContext.current
+    val viewModel: RegisterViewModel =
+        viewModel(factory = RegisterViewModel.Factory(context.applicationContext as Application))
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -33,6 +46,23 @@ fun RegisterScreen(
     var lastName by remember { mutableStateOf("") }
     var numberPhone by remember { mutableStateOf("") }
     var address by remember { mutableStateOf("") }
+
+    var loadingVisibility by remember { mutableStateOf(false) }
+    val registerState by viewModel.uiRegisterState.observeAsState()
+
+    LaunchedEffect(registerState){
+        loadingVisibility = when (registerState) {
+            is RegisterState.Failure -> {
+                Toast.makeText(context, "Login failed", Toast.LENGTH_LONG).show()
+                false
+            }
+            is RegisterState.Successful -> {
+                navController.navigate(Routes.login)
+                false
+            }
+            else -> false
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -79,8 +109,7 @@ fun RegisterScreen(
             onValueChange = { name = it },
             label = { Text(text = "Name:") },
             modifier = Modifier
-                .fillMaxWidth(),
-            visualTransformation = PasswordVisualTransformation()
+                .fillMaxWidth()
         )
 
         OutlinedTextField(
@@ -88,8 +117,7 @@ fun RegisterScreen(
             onValueChange = { lastName = it },
             label = { Text(text = "Last name:") },
             modifier = Modifier
-                .fillMaxWidth(),
-            visualTransformation = PasswordVisualTransformation()
+                .fillMaxWidth()
         )
 
         OutlinedTextField(
@@ -97,8 +125,7 @@ fun RegisterScreen(
             onValueChange = { numberPhone = it },
             label = { Text(text = "Number phone:") },
             modifier = Modifier
-                .fillMaxWidth(),
-            visualTransformation = PasswordVisualTransformation()
+                .fillMaxWidth()
         )
 
         OutlinedTextField(
@@ -106,13 +133,12 @@ fun RegisterScreen(
             onValueChange = { address = it },
             label = { Text(text = "Address:") },
             modifier = Modifier
-                .fillMaxWidth(),
-            visualTransformation = PasswordVisualTransformation()
+                .fillMaxWidth()
         )
 
         Button(
             onClick = {
-                val user = User(0, name, lastName, email, password, numberPhone, address)
+                val user = User(name, lastName, email, password, numberPhone, address)
                 viewModel.registerUser(user)
             },
             modifier = Modifier

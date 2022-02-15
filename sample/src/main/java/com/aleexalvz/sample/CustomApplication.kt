@@ -7,9 +7,10 @@ import com.aleexalvz.login_manager.builder.LoginManager
 class CustomApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-        LoginManager.Builder(this){
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        }
+        initLoginManager()
+    }
+
+    private fun initLoginManager() {
+        LoginManager.Builder(this, MainActivity::class.java).init()
     }
 }

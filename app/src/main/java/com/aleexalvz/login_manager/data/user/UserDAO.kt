@@ -9,7 +9,7 @@ import androidx.room.Query
 interface UserDAO {
 
     @Query("SELECT * FROM User WHERE email = :email AND password = :password")
-    fun getUser(email: String, password: String): User
+    fun getUser(email: String, password: String): User?
 
     @Insert
     fun insertUser(user: User)
