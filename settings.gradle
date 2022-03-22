@@ -3,8 +3,8 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        jcenter() // Warning: this repository is going to shut down soon
     }
 }
-rootProject.name = "sdk-user"
+rootProject.name = "Login Manager"
 include ':app'
+include ':sample'
