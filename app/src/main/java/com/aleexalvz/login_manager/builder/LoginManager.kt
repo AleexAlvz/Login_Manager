@@ -3,7 +3,7 @@ package com.aleexalvz.login_manager.builder
 import android.content.Context
 import android.content.Intent
 import androidx.core.content.ContextCompat.startActivity
-import com.aleexalvz.login_manager.data.user.User
+import com.aleexalvz.login_manager.model.User
 import com.aleexalvz.login_manager.ui.main.MainActivity
 import java.lang.RuntimeException
 

@@ -1,4 +1,4 @@
-package com.aleexalvz.login_manager.data.user
+package com.aleexalvz.login_manager.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -6,7 +6,6 @@ import androidx.room.PrimaryKey
 @Entity
 class User(
     val name: String,
-    val lastName: String,
     val email: String,
     val password: String,
     val numberPhone: String? = null,

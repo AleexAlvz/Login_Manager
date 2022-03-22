@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.aleexalvz.login_manager.builder.LoginManager
 import com.aleexalvz.login_manager.data.user.UserDatabase
-import com.aleexalvz.login_manager.data.user.UserException
+import com.aleexalvz.login_manager.model.UserException
 import com.aleexalvz.login_manager.data.user.repository.LoginRepository
 import com.aleexalvz.login_manager.data.user.repository.LoginRepositoryImpl
 import com.aleexalvz.login_manager.model.state.LoginState

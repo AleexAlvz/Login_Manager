@@ -1,9 +1,8 @@
 package com.aleexalvz.login_manager.data.user.repository
 
-import com.aleexalvz.login_manager.data.user.User
+import com.aleexalvz.login_manager.model.User
 import com.aleexalvz.login_manager.data.user.UserDAO
-import com.aleexalvz.login_manager.data.user.UserDatabase
-import com.aleexalvz.login_manager.data.user.UserException
+import com.aleexalvz.login_manager.model.UserException
 
 class RegisterRepositoryImpl(private val dao: UserDAO) : RegisterRepository {
 

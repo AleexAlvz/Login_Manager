@@ -21,14 +21,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.aleexalvz.login_manager.data.user.User
+import com.aleexalvz.login_manager.model.User
 import com.aleexalvz.login_manager.model.state.RegisterState
 import com.aleexalvz.login_manager.navigation.Routes
 import com.aleexalvz.login_manager.ui.theme.DarkBlue
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 @Composable
 fun RegisterScreen(
@@ -43,7 +39,6 @@ fun RegisterScreen(
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
     var name by remember { mutableStateOf("") }
-    var lastName by remember { mutableStateOf("") }
     var numberPhone by remember { mutableStateOf("") }
     var address by remember { mutableStateOf("") }
 
@@ -113,14 +108,6 @@ fun RegisterScreen(
         )
 
         OutlinedTextField(
-            value = lastName,
-            onValueChange = { lastName = it },
-            label = { Text(text = "Last name:") },
-            modifier = Modifier
-                .fillMaxWidth()
-        )
-
-        OutlinedTextField(
             value = numberPhone,
             onValueChange = { numberPhone = it },
             label = { Text(text = "Number phone:") },
@@ -138,7 +125,7 @@ fun RegisterScreen(
 
         Button(
             onClick = {
-                val user = User(name, lastName, email, password, numberPhone, address)
+                val user = User(name, email, password, numberPhone, address)
                 viewModel.registerUser(user)
             },
             modifier = Modifier
